@@ -1,24 +1,26 @@
 {
-	"geode": "3.4.0",
-	"gd": {
-		"win": "2.206",
-		"android": "*",
-		"ios": "2.206",
-		"mac": "2.206"
-	},
-	"version": "v2.0.1",
-	"id": "thesillydoggo.animatedprofiles",
-	"name": "Animated Profile Icons",
-	"developer": "TheSillyDoggo",
-	"description": "Animates the spider and robot icons on profiles and comment cells",
-	"tags": [
-        "interface"
-    ],
-	"dependencies": [
-        {
-            "id": "geode.node-ids",
-            "version": "v1.1.4",
-            "importance": "required"
-        }
+    "geode": "4.2.0",
+    "gd": {
+        "win": "2.2074",
+        "mac": "2.2074",
+        "android": "2.2074"
+    },
+    "version": "v1.0.0",
+    "id": "hiimjasmine00.animated_icons",
+    "name": "Animated Icons",
+    "developer": "hiimjasmine00",
+    "description": "A mod that animates robots and spiders in menus.",
+    "dependencies": {
+        "geode.node-ids": ">=v1.1.0"
+    },
+    "links": {
+        "community": "https://discord.gg/QVKmbvBXA7",
+        "source": "https://github.com/hiimjasmine00/AnimatedProfiles",
+        "homepage": "https://www.hiimjustin000.com"
+    },
+    "tags": [
+        "enhancement",
+        "interface",
+        "offline"
     ]
 }
