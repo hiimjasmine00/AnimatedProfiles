@@ -4,7 +4,7 @@
 
 using namespace geode::prelude;
 
-class $modify(CCTouchDispatcher) {
+class $modify(APITouchDispatcher, CCTouchDispatcher) {
     void touches(CCSet* touches, CCEvent* event, unsigned int uIndex) {
         CCTouchDispatcher::touches(touches, event, uIndex);
 
