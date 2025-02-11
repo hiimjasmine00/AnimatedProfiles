@@ -1,4 +1,4 @@
-#include <Geode/binding/GameManager.hpp>
+#include "../AnimatedIcons.hpp"
 #include <Geode/binding/GJSpiderSprite.hpp>
 #include <Geode/binding/SimplePlayer.hpp>
 #include <Geode/modify/ProfilePage.hpp>
@@ -7,12 +7,7 @@ using namespace geode::prelude;
 
 class $modify(APIProfilePage, ProfilePage) {
     struct Fields {
-        ~Fields() {
-            auto gameManager = GameManager::get();
-            gameManager->setUserObject("original-scale"_spr, nullptr);
-            gameManager->setUserObject("selected-child"_spr, nullptr);
-            gameManager->setUserObject("touch-children"_spr, nullptr);
-        }
+        ~Fields() { AnimatedIcons::releaseTouchChildren(); }
     };
 
     static void onModify(ModifyBase<ModifyDerive<APIProfilePage, ProfilePage>>& self) {
@@ -42,7 +37,7 @@ class $modify(APIProfilePage, ProfilePage) {
                 }
             }
         }
-        if (touchChildren->count() > 0) GameManager::get()->setUserObject("touch-children"_spr, touchChildren);
+        AnimatedIcons::addTouchChildren(touchChildren);
 
         m_fields.self();
     }

@@ -1,4 +1,4 @@
-#include <Geode/binding/GameManager.hpp>
+#include "../AnimatedIcons.hpp"
 #include <Geode/binding/GJItemIcon.hpp>
 #include <Geode/binding/GJSpiderSprite.hpp>
 #include <Geode/binding/SimplePlayer.hpp>
@@ -8,12 +8,7 @@ using namespace geode::prelude;
 
 class $modify(APICommunityCreditsPage, CommunityCreditsPage) {
     struct Fields {
-        ~Fields() {
-            auto gameManager = GameManager::get();
-            gameManager->setUserObject("original-scale"_spr, nullptr);
-            gameManager->setUserObject("selected-child"_spr, nullptr);
-            gameManager->setUserObject("touch-children"_spr, nullptr);
-        }
+        ~Fields() { AnimatedIcons::releaseTouchChildren(); }
     };
 
     bool init() override {
@@ -30,7 +25,7 @@ class $modify(APICommunityCreditsPage, CommunityCreditsPage) {
                 if (icon->m_unlockType == UnlockType::Spider && player->m_spiderSprite) touchChildren->addObject(player->m_spiderSprite);
             }
         }
-        if (touchChildren->count() > 0) GameManager::get()->setUserObject("touch-children"_spr, touchChildren);
+        AnimatedIcons::addTouchChildren(touchChildren);
 
         m_fields.self();
         return true;

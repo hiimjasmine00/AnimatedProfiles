@@ -1,4 +1,4 @@
-#include <Geode/binding/GameManager.hpp>
+#include "../AnimatedIcons.hpp"
 #include <Geode/binding/GJSpiderSprite.hpp>
 #include <Geode/binding/SimplePlayer.hpp>
 #include <Geode/modify/GJGarageLayer.hpp>
@@ -7,12 +7,7 @@ using namespace geode::prelude;
 
 class $modify(APIGarageLayer, GJGarageLayer) {
     struct Fields {
-        ~Fields() {
-            auto gameManager = GameManager::get();
-            gameManager->setUserObject("original-scale"_spr, nullptr);
-            gameManager->setUserObject("selected-child"_spr, nullptr);
-            gameManager->setUserObject("touch-children"_spr, nullptr);
-        }
+        ~Fields() { AnimatedIcons::releaseTouchChildren(); }
     };
 
     bool init() override {
@@ -29,7 +24,22 @@ class $modify(APIGarageLayer, GJGarageLayer) {
             m_playerObject->m_spiderSprite->setUserObject("reset"_spr, CCBool::create(true));
             touchChildren->addObject(m_playerObject->m_spiderSprite);
         }
-        if (touchChildren->count() > 0) GameManager::get()->setUserObject("touch-children"_spr, touchChildren);
+        if (auto playerObject2 = static_cast<SimplePlayer*>(getChildByID("player2-icon"))) {
+            if (!playerObject2->m_robotSprite) playerObject2->createRobotSprite(1);
+            if (!playerObject2->m_spiderSprite) playerObject2->createSpiderSprite(1);
+
+            if (playerObject2->m_robotSprite) {
+                playerObject2->m_robotSprite->runAnimation("idle01");
+                playerObject2->m_robotSprite->setUserObject("reset"_spr, CCBool::create(true));
+                touchChildren->addObject(playerObject2->m_robotSprite);
+            }
+            if (playerObject2->m_spiderSprite) {
+                playerObject2->m_spiderSprite->runAnimation("idle01");
+                playerObject2->m_spiderSprite->setUserObject("reset"_spr, CCBool::create(true));
+                touchChildren->addObject(playerObject2->m_spiderSprite);
+            }
+        }
+        AnimatedIcons::addTouchChildren(touchChildren);
 
         m_fields.self();
 

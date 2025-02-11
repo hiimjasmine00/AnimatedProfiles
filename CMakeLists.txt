@@ -22,6 +22,7 @@ add_library(${PROJECT_NAME} SHARED
     src/hooks/ItemInfoPopup.cpp
     src/hooks/ProfilePage.cpp
     src/hooks/PurchaseItemPopup.cpp
+    src/AnimatedIcons.cpp
 )
 
 if (NOT DEFINED ENV{GEODE_SDK})

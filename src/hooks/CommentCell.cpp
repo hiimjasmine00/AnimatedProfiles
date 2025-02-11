@@ -1,4 +1,4 @@
-#include <Geode/binding/GameManager.hpp>
+#include "../AnimatedIcons.hpp"
 #include <Geode/binding/GJComment.hpp>
 #include <Geode/binding/GJUserScore.hpp>
 #include <Geode/binding/GJSpiderSprite.hpp>
@@ -9,12 +9,7 @@ using namespace geode::prelude;
 
 class $modify(APICommentCell, CommentCell) {
     struct Fields {
-        ~Fields() {
-            auto gameManager = GameManager::get();
-            gameManager->setUserObject("original-scale"_spr, nullptr);
-            gameManager->setUserObject("selected-child"_spr, nullptr);
-            gameManager->setUserObject("touch-children"_spr, nullptr);
-        }
+        ~Fields() { AnimatedIcons::releaseTouchChildren(); }
     };
 
     void loadFromComment(GJComment* comment) {
@@ -34,7 +29,7 @@ class $modify(APICommentCell, CommentCell) {
                 player->m_spiderSprite->setUserObject("reset"_spr, CCBool::create(true));
                 touchChildren->addObject(player->m_spiderSprite);
             }
-            if (touchChildren->count() > 0) GameManager::get()->setUserObject("touch-children"_spr, touchChildren);
+            AnimatedIcons::addTouchChildren(touchChildren);
         }
 
         m_fields.self();
