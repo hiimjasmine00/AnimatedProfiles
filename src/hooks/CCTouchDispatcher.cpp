@@ -95,12 +95,14 @@ class $modify(CCTouchDispatcher) {
 
         auto retainCount = selectedChild->retainCount();
         auto originalScale = static_cast<CCFloat*>(gameManager->getUserObject("original-scale"_spr));
+        originalScale->retain();
         deselectChild();
-        if (selectedChild && retainCount > 1) {
+        if (retainCount > 1) {
             selectedChild->stopActionByTag(0);
             selectedChild->setScale(originalScale ? originalScale->getValue() : 1.0f);
             static_cast<CCAnimatedSprite*>(selectedChild)->runAnimationForced("idle02");
         }
+        originalScale->release();
     }
 
     void onTouchesCancelled(CCSet* touches, CCEvent* event) {
